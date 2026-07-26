@@ -40,7 +40,7 @@ jobs:
         run: ./mvnw package
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: petclinic-war
-          path: "/petclinic.war"
+          name: petclinic-war-${{ matrix.runs-on }}
+          path: "target/petclinic.war"
