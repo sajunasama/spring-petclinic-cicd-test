@@ -38,6 +38,7 @@ jobs:
           path: target/surefire-reports
 
       - name: Extract project ver
+        id: extract_version
         run: echo VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec) >> $GITHUB_OUTPUT
 
       - name: Docker Hub login
@@ -59,8 +60,8 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/petclinic:${{steps.extract_version.outputs.VERSION}}
             ${{ secrets.DOCKERHUB_USERNAME }}/petclinic:latest
           build-args: |
-            PROFILE:dev
-            APP_VERSION:${{steps.extract_version.outputs.VERSION}}
+            PROFILE=dev
+            APP_VERSION=${{ steps.extract_version.outputs.VERSION }}
           # Optimize build process by caching Docker layters
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/petclinic:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/petclinic:buildcache,mode=max
