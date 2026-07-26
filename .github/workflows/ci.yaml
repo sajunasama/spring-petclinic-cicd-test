@@ -38,7 +38,7 @@ jobs:
           path: target/surefire-reports
 
       - name: Extract project ver
-        run: echo VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
+        run: echo VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec) >> $GITHUB_OUTPUT
 
       - name: Docker Hub login
         uses: docker/login-action@v3
