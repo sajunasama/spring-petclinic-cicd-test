@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: "17"
-          distribution: "adopt"
+          distribution: "temurin"
 
       - name: Set up Maven dependency caching
         uses: actions/cache@v3
@@ -39,7 +39,7 @@ jobs:
 
       - name: Extract project ver
         id: extract_version
-        run: echo VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec) >> $GITHUB_OUTPUT
+        run: echo "VERSION=$(./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout)" >> $GITHUB_OUTPUT
 
       - name: Docker Hub login
         uses: docker/login-action@v3
